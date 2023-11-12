@@ -1,10 +1,10 @@
 // popup.js
 
 document.getElementById("convertButton").addEventListener("click", function () {
+  // content.js에 웹 페이지 분석을 요청
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { action: 'parseHTML' });
   });
-});
 });
 
 // updateHtml 액션을 처리하기 위한 리스너를 추가합니다
@@ -21,7 +21,7 @@ function updateHtmlOnPage(htmlInfo) {
   document.body.innerHTML = htmlInfo;
     //이는 웹 페이지를 간단히 업데이트하는 방법 중 하나이지만, 모든 시나리오에 적합하지 않을 수 있습니다.
 }
-// 수정된 부분: content.js에서 최종 결과를 받아와 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수
+// content.js에서 최종 결과를 받아와 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수
 
 // updateHtml 액션을 처리하기 위한 리스너를 추가합니다
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -36,18 +36,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 
-// 수정된 부분: 최종 결과에서 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
+// 최종 결과에서 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
 function replaceHateSentencesWithEmoticons(labeledSentences) {
+  let updatedHtml = document.documentElement.outerHTML;
+
   for (const labeledSentence of labeledSentences) {
     const { sentence, label } = labeledSentence;
     if (label === 'hate speech' || label === 'offensive term') {
       const replacedSentence = sentence.replace(regex, getRandomEmoticon());
-      document.body.innerHTML = document.body.innerHTML.replace(sentence, replacedSentence);
+      updatedHtml = updatedHtml.replace(sentence, replacedSentence);
     }
   }
-}
 
-// 수정된 부분: 최종 결과에서 변경된 HTML 정보를 다시 웹 페이지로 전송하는 함수
+  // HTML을 한 번에 업데이트
+  document.body.innerHTML = updatedHtml;
+}
+// 변경된 HTML 정보를 다시 웹 페이지로 전송하는 함수
 function sendUpdatedHtmlToWebPage() {
   const updatedHtml = document.documentElement.outerHTML;
   chrome.runtime.sendMessage({ action: "updateHtml", htmlInfo: updatedHtml });
