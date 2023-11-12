@@ -7,7 +7,7 @@ document.getElementById("convertButton").addEventListener("click", function () {
   });
 });
 
-// updateHtml 액션을 처리하기 위한 리스너를 추가합니다
+// updateHtml 액션을 처리하기 위한 리스너를 추가합니다 인데 아래 updateHtml 이 request.action일 경우가 나뉜 부분이 있음. 뭐가 맞는지 모르겠어서 둘 다 남겨둠...
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "updateHtml") {
     updateHtmlOnPage(request.htmlInfo);
