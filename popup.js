@@ -1,7 +1,10 @@
 // popup.js
 
 document.getElementById("convertButton").addEventListener("click", function () {
-  classifyAndReplace(); // content.js에서의 기존 로직을 트리거합니다
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { action: 'parseHTML' });
+  });
+});
 });
 
 // updateHtml 액션을 처리하기 위한 리스너를 추가합니다
@@ -19,13 +22,19 @@ function updateHtmlOnPage(htmlInfo) {
     //이는 웹 페이지를 간단히 업데이트하는 방법 중 하나이지만, 모든 시나리오에 적합하지 않을 수 있습니다.
 }
 // 수정된 부분: content.js에서 최종 결과를 받아와 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수
+
+// updateHtml 액션을 처리하기 위한 리스너를 추가합니다
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === 'displaySentences') {
+  if (request.action === "updateHtml") {
+    updateHtmlOnPage(request.htmlInfo);
+  } else if (request.action === 'displaySentences') {
     const labeledSentences = request.sentences;
+    // 수정된 부분: 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수 호출
     replaceHateSentencesWithEmoticons(labeledSentences);
     sendUpdatedHtmlToWebPage();
   }
 });
+
 
 // 수정된 부분: 최종 결과에서 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
 function replaceHateSentencesWithEmoticons(labeledSentences) {
