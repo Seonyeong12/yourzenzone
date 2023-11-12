@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Hate Speech Filtering Program",
+    "name": "YourZenzone",
     "version": "1.0",
     "description": "Convert the hate speech to a random emoticon on website",
     "permissions": [
@@ -9,9 +9,7 @@
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "images/icon16.png"
       }
     },
     "content_scripts": [
@@ -21,8 +19,6 @@
       }
     ],
     "icons": {
-      "16": "images/icon16.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
+      "16": "images/icon16.png"
     }
   }

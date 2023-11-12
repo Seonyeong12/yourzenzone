@@ -1,28 +1,88 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <html>
 <head>
-  <title>Hate Speech Filtering Program</title>
+  <title>YourZenzone</title>
   <script src="popup.js"></script>
+  <link rel="stylesheet" href="css/popup.css">
 </head>
 <body>
-  <h1>Hate Speech Filtering Program</h1>
+  <h2>YourZenzone</h2>
   <button id="convertButton">Convert</button>
-</body>
-</html>
 
 
-"""
-//html 정보를 웹으로 전송
-<!DOCTYPE html>
-<html>
-<head>
-  <title>내 크롬 확장 프로그램</title>
-</head>
-<body>
-  <h1>데이터 전송</h1>
+  <div class="container">
+    <div class="components">
+
+      
+        <div class="switch">
+
+          <div class="category">여성/가족</div>
+          <div class="switch__1">
+            <input id="switch-1" type="checkbox" class="category_check">
+            <label for="switch-1"></label>
+          </div>
+        
+          <div class="category">남성</div>
+          <div class="switch__2">
+            <input id="switch-2" type="checkbox" class="category_check">
+            <label for="switch-2"></label>
+          </div>
+
+          <div class="category">성소수자</div>
+          <div class="switch__3">
+            <input id="switch-3" type="checkbox" class="category_check">
+            <label for="switch-3"></label>
+          </div>
+
+          <div class="category">인종/국적</div>
+          <div class="switch__4">
+            <input id="switch-4" type="checkbox" class="category_check">
+            <label for="switch-4"></label>
+          </div>
+
+          <div class="category">연령</div>
+          <div class="switch__5">
+            <input id="switch-5" type="checkbox" class="category_check">
+            <label for="switch-5"></label>
+          </div>
+
+          <div class="category">지역</div>
+          <div class="switch__6">
+            <input id="switch-6" type="checkbox" class="category_check">
+            <label for="switch-6"></label>
+          </div>
+
+          <div class="category">종교</div>
+          <div class="switch__7">
+            <input id="switch-7" type="checkbox" class="category_check">
+            <label for="switch-7"></label>
+          </div>
+
+          <div class="category">기타 혐오</div>
+          <div class="switch__8">
+            <input id="switch-8" type="checkbox" class="category_check">
+            <label for="switch-8"></label>
+          </div>
+          
+          <div class="category">악플/욕설</div>
+          <div class="switch__9">
+            <input id="switch-9" type="checkbox" class="category_check">
+            <label for="switch-9"></label>
+          </div>
+
+        </div>
+      </div>
+  </div>
+
+  <div class="form">
+    <input type="text" class="form__input" placeholder="필터링 키워드 입력">
+  </div>
+  <div class="btn btn__primary"><p>적용</p></div>
+
+  <h3>데이터 전송</h3>
   <input type="text" id="dataInput" placeholder="전송할 데이터 입력">
   <button id="sendButton">전송</button>
-  <script src="popup.js"></script>
 </body>
 </html>
-"""
+
