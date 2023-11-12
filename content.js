@@ -88,16 +88,17 @@ function getLabelFromIndex(output) {
 }
 
 
-// 수정된 부분: 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
+// 수정된 부분: 최종 결과에서 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
 function replaceHateSentencesWithEmoticons(labeledSentences) {
+  let updatedHtml = document.documentElement.outerHTML;
+
   for (const labeledSentence of labeledSentences) {
     const { sentence, label } = labeledSentence;
     if (label === 'hate speech' || label === 'offensive term') {
       const replacedSentence = sentence.replace(regex, getRandomEmoticon());
-      document.body.innerHTML = document.body.innerHTML.replace(sentence, replacedSentence);
+      updatedHtml = updatedHtml.replace(sentence, replacedSentence);
     }
   }
-}
 
 // 수정된 부분: 변경된 HTML 정보를 다시 웹 페이지로 전송하는 함수
 function sendUpdatedHtmlToWebPage() {
