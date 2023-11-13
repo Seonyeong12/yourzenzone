@@ -42,6 +42,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     //최종 필터링된 결과 전송
     //filteredSentences에 최종 결과 저장하여 사용
     chrome.runtime.sendMessage({ action: 'displaySentences', sentences: filteredSentences });
+    //  혐오 표현을 랜덤 이모티콘으로 대체
+    replaceHateSentencesWithEmoticons(labeledSentences);
+    
+    //  변경된 HTML 정보를 다시 웹 페이지로 전송
+    sendUpdatedHtmlToWebPage();
   }
 });
 
@@ -80,4 +85,23 @@ function getLabelFromIndex(output) {
   // output은 모델의 출력 배열로 가정
   const highestScoreLabel = output.reduce((max, current) => (current.score > max.score) ? current : max);
   return highestScoreLabel.label;
+}
+
+
+// 최종 결과에서 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
+function replaceHateSentencesWithEmoticons(labeledSentences) {
+  for (const labeledSentence of labeledSentences) {
+    const { sentence, label } = labeledSentence;
+    if (label === 'hate speech' || label === 'offensive term') {
+      const replacedSentence = sentence.replace(regex, getRandomEmoticon());
+      document.body.innerHTML = document.body.innerHTML.replace(sentence, replacedSentence);
+    }
+  }
+}
+
+
+// 변경된 HTML 정보를 다시 웹 페이지로 전송하는 함수
+function sendUpdatedHtmlToWebPage() {
+  const updatedHtml = document.documentElement.outerHTML;
+  chrome.runtime.sendMessage({ action: "updateHtml", htmlInfo: updatedHtml });
 }
