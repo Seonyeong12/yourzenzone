@@ -34,10 +34,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const sentences = targetElement.innerText.split('.');
 
     // 모델 불러오기
-    const model = await loadModel();
+    const model = loadModel();
 
      // 문장 레이블링
-    const labeledSentences = await labelSentences(sentences, model);
+    const labeledSentences = labelSentences(sentences, model);
 
     //최종 필터링된 결과 전송
     //filteredSentences에 최종 결과 저장하여 사용
