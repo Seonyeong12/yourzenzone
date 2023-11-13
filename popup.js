@@ -57,11 +57,7 @@ function sendUpdatedHtmlToWebPage() {
 //content.js에서 문장 단위로 parse하기 위한 버튼
 //후에 버튼 이름을 수정하거나, 필터링 버튼을 눌렀을 때 자동으로 같이 진행되도록 변경 필요해보임.
 // content.js에서의 HTML 파싱 기능을 트리거합니다
-document.getElementById('parseButton').addEventListener('click', function () {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { action: 'parseHTML' });
-  });
-});
+
 
 
 
