@@ -7,10 +7,15 @@ document.getElementById("convertButton").addEventListener("click", function () {
   });
 });
 
-// updateHtml 액션을 처리하기 위한 리스너를 추가합니다 인데 아래 updateHtml 이 request.action일 경우가 나뉜 부분이 있음. 뭐가 맞는지 모르겠어서 둘 다 남겨둠...
+// updateHtml 액션을 처리하기 위한 리스너를 추가합니다
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "updateHtml") {
     updateHtmlOnPage(request.htmlInfo);
+  } else if (request.action === 'displaySentences') {
+    const labeledSentences = request.sentences;
+    // 수정된 부분: 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수 호출
+    replaceHateSentencesWithEmoticons(labeledSentences);
+    sendUpdatedHtmlToWebPage();
   }
 });
 
@@ -23,17 +28,7 @@ function updateHtmlOnPage(htmlInfo) {
 }
 // content.js에서 최종 결과를 받아와 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수
 
-// updateHtml 액션을 처리하기 위한 리스너를 추가합니다
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "updateHtml") {
-    updateHtmlOnPage(request.htmlInfo);
-  } else if (request.action === 'displaySentences') {
-    const labeledSentences = request.sentences;
-    // 수정된 부분: 혐오 표현을 랜덤 이모티콘으로 대체하고 웹 페이지를 업데이트하는 함수 호출
-    replaceHateSentencesWithEmoticons(labeledSentences);
-    sendUpdatedHtmlToWebPage();
-  }
-});
+
 
 
 // 최종 결과에서 혐오 표현을 랜덤 이모티콘으로 대체하는 함수
@@ -58,13 +53,12 @@ function sendUpdatedHtmlToWebPage() {
 }
 
 
-  //hello를 이모티콘으로 변환하는 코드
-  function convertToEmoticon() {
-    let text = document.body.textContent;
-    text = text.replace(/Hello/g, "😀");
-    document.body.textContent = text;
-  }
-  
+// 필요한 경우 추가적인 함수 또는 로직을 추가하세요
+//content.js에서 문장 단위로 parse하기 위한 버튼
+//후에 버튼 이름을 수정하거나, 필터링 버튼을 눌렀을 때 자동으로 같이 진행되도록 변경 필요해보임.
+// content.js에서의 HTML 파싱 기능을 트리거합니다
+
+
 
 
   const checkboxes = document.querySelectorAll('.category_check');

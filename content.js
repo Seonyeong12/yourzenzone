@@ -18,6 +18,16 @@ if (regex.test(text)) {
     document.body.textContent = replacedText;
   }
 
+chrome.runtime.sendMessage({ action: 'getApiKey' }, function (response) {
+  const apiKey = response.apiKey;
+  if (apiKey) {
+      console.log('API key retrieved:', apiKey);
+      // apiKey를 사용하여 API 호출 등의 작업을 수행
+  } else {
+      console.error('API key not found');
+  }
+});
+
 //문장단위 parsing
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'parseHTML') {
