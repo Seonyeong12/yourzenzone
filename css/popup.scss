@@ -84,7 +84,8 @@ html{
   
 
   .btn {
-    width: 10.5rem;
+    margin-right: 0.5rem;
+    width: 5rem;
     height: 1.5rem;
     border-radius: 0.3rem;
     box-shadow: var(--shadow);
@@ -95,7 +96,7 @@ html{
     cursor: pointer;
     transition: .3s ease;
   
-    &__primary {
+    &Add, &Del {
       background: var(--primary);
       box-shadow:inset .2rem .2rem 1rem var(--primary-light), 
                 inset -.2rem -.2rem 1rem var(--primary-dark),
@@ -107,6 +108,10 @@ html{
         box-shadow:inset .2rem .2rem 1rem var(--primary-dark), 
                inset -.2rem -.2rem 1rem var(--primary-light);
       }
+    }
+
+    &Add {
+      float: left;
     }
   
     p { 
@@ -136,6 +141,10 @@ html{
     
   }
 
+
+  .text {
+    margin-top: 0.5rem;
+  }
 
   @font-face {
     font-family: 'Pretendard-Regular';

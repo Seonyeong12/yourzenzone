@@ -3,9 +3,7 @@
     "name": "YourZenzone",
     "version": "1.0",
     "description": "Convert the hate speech to a random emoticon on website",
-    "permissions": [
-      "activeTab"
-    ],
+   
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
