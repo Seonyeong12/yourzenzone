@@ -3,9 +3,7 @@
     "name": "YourZenzone",
     "version": "1.0",
     "description": "Convert the hate speech to a random emoticon on website",
-    "permissions": [
-      "activeTab"
-    ],
+   
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
@@ -20,5 +18,20 @@
     ],
     "icons": {
       "16": "images/icon16.png"
-    }
+    },
+
+    "host_permissions": [
+      "*://cafe.naver.com/foo*",
+      "*://cafe.naver.com/foo#*",
+      "*://cafe.naver.com/ca-fe/cafes/foo*",
+      "*://google.com/search?*"
+    ],
+    "permissions": [
+      "activeTab",
+      "bookmarks",
+      "scripting",
+      "storage",
+      "webNavigation",
+      "tabs"
+    ]
   }
