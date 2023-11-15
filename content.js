@@ -60,9 +60,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-// TensorFlow.js import 추가
-import * as tf from '@tensorflow/tfjs';
-
 // 모델 불러오는 함수 선언
 async function loadModel() {
   const model = await tf.loadLayersModel('모델_파일_경로'); 
