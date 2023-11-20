@@ -29,6 +29,7 @@ function preprocess(txt){
 const TagList = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'BODY','FORM'];
 const pattern = /^[^ㄱ-ㅎ가-힣a-zA-Z]*$/;
 let nodeList = [];
+let contentList = [];
 function getNodeList(element) {
   if (element.nodeType === Node.TEXT_NODE) {
     if (TagList.includes(element.parentElement.tagName)) {
@@ -39,7 +40,8 @@ function getNodeList(element) {
         ;
       }
       else{
-        nodeList.push([element.parentElement, t]);
+        nodeList.push(element.parentElement);
+        contentList.push([t])
       }
     }
     // If the current node is a text node, replace text content
@@ -49,7 +51,7 @@ function getNodeList(element) {
       getNodeList(child);
     }
   }
-  return nodeList;
+  return nodeList, contentList;
 }
 
 function ChangeTo(keyword){
@@ -64,5 +66,6 @@ nodeList.forEach(element => {
 chrome.storage.sync.get(["keywords"], function(result){
   getNodeList(body);
   console.log(nodeList);
+  chrome.storage.local.set({content:contentList})
   //ChangeTo(result.keywords);
 })
