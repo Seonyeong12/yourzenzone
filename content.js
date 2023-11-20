@@ -18,6 +18,16 @@ const pattern = /^[^ㄱ-ㅎ가-힣a-zA-Z]*$/;
 let nodeList = [];
 let contentList = [];
 
+chrome.runtime.sendMessage({ action: 'getApiKey' }, function (response) {
+  const apiKey = response.apiKey;
+  if (apiKey) {
+      console.log('API key retrieved:', apiKey);
+      // apiKey를 사용하여 API 호출 등의 작업을 수행
+  } else {
+      console.error('API key not found');
+  }
+});
+
 function getNodeList(element) {
   if (element.nodeType === Node.TEXT_NODE) {
     if (!TagList.includes(element.parentElement.tagName)) {
