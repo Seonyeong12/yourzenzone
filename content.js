@@ -17,17 +17,6 @@ const TagList = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'BODY', 'FORM'];
 const pattern = /^[^ㄱ-ㅎ가-힣a-zA-Z]*$/;
 let nodeList = [];
 let contentList = [];
-
-chrome.runtime.sendMessage({ action: 'getApiKey' }, function (response) {
-  const apiKey = response.apiKey;
-  if (apiKey) {
-      console.log('API key retrieved:', apiKey);
-      // apiKey를 사용하여 API 호출 등의 작업을 수행
-  } else {
-      console.error('API key not found');
-  }
-});
-
 function getNodeList(element) {
   if (element.nodeType === Node.TEXT_NODE) {
     if (!TagList.includes(element.parentElement.tagName)) {
@@ -47,16 +36,18 @@ function getNodeList(element) {
 function ChangeTo(keyword) {
   nodeList.forEach(element => {
     const originalText = element.textContent;
-    const regex = new RegExp(keyword, "gi");
+    const regex = new RegExp(keyword);
     const newText = originalText.replace(regex, getRandomEmoticon());
     element.textContent = newText;
+    //element.textContent = getRandomEmoticon();
   });
 }
 
 function processPage() {
   chrome.storage.sync.get(["keywords"], function(result) {
-    if (result.keywords && result.keywords.length > 0) {
+    if (result.keywords) {
       getNodeList(body);
+      //console.log(nodeList);
       result.keywords.forEach(keyword => {
         ChangeTo(keyword);
       });
@@ -64,7 +55,6 @@ function processPage() {
   });
 }
 
-// 페이지 로드 및 스토리지 변경 시 실행
 processPage();
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
@@ -74,7 +64,6 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     }
   }
 });
-
 
 window.addEventListener('scroll', () => {
   processPage();

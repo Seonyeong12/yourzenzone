@@ -35,7 +35,7 @@ var keywordInput = document.getElementsByClassName('form__input');
 const keyword_btn = document.getElementById('addKeyword');
 const del_btn = document.getElementById('delKeyword');
 var keywords = JSON.parse(window.localStorage.getItem('keywords'));
-document.getElementById("keywords").innerText = keywords;
+//document.getElementById("keywords").innerText = keywords;
 
 if (keywords) {
   var keywords = JSON.parse(window.localStorage.getItem('keywords'));
@@ -43,7 +43,7 @@ if (keywords) {
 else {
   var keywords = []
 }
-
+keywordInput[0].value = keywords;
 
 function saveKeywords(keywords){
   window.localStorage.setItem('keywords', JSON.stringify(keywords));
@@ -55,22 +55,13 @@ function saveKeywords(keywords){
 keyword_btn.addEventListener('click', function(){
   //console.log(keywordInput);
   var keyword = keywordInput[0].value;
-  if (keyword == ''){
-    ;
-  }
-  else if(keywords.includes(keyword)){
-    ;
-  }
-  else{
-  keywords.push(keyword);
+  keywords = keyword.split(',');
   saveKeywords(keywords);
-  }
-  keywordInput[0].value = '';
 });
 
-del_btn.addEventListener('click', function(){
-  var keyword = keywordInput[0].value;
-  keywords = keywords.filter(item => item !== keyword);
-  saveKeywords(keywords);
-  keywordInput[0].value = '';
-});
+// del_btn.addEventListener('click', function(){
+//   var keyword = keywordInput[0].value;
+//   keywords = keywords.filter(item => item !== keyword);
+//   saveKeywords(keywords);
+//   keywordInput[0].value = '';
+// });
