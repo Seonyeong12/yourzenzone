@@ -1,28 +1,32 @@
-// background.js
+try {
+  self.importScripts("node_modules/firebase/firebase-compat.js");
+  const firebaseConfig = {
+    apiKey: "AIzaSyCr1AmUdqt6j2Y01bEHbzbYqF_GwmKKAjs",
+    authDomain: "yourzenzone-c6531.firebaseapp.com",
+    projectId: "yourzenzone-c6531",
+    storageBucket: "yourzenzone-c6531.appspot.com",
+    messagingSenderId: "830464043484",
+    appId: "1:830464043484:web:e678a7bba42e2cbfe4c719",
+    measurementId: "G-6S6312M496",
+    databaseURL: "https://yourzenzone-c6531-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  };
 
-// API 키 저장
-function saveApiKey(apiKey) {
-    chrome.storage.local.set({ 'apiKey': apiKey }, function () {
-        console.log('API key saved:', apiKey);
-    });
-}
 
-// API 키 가져오기
-function getApiKey(callback) {
-    chrome.storage.local.get('apiKey', function (result) {
-        const apiKey = result.apiKey;
-        if (apiKey) {
-            callback(apiKey);
-        } else {
-            console.error('API key not found');
-        }
-    });
-}
+const app = firebase.initializeApp(firebaseConfig);
+console.log("Initialized Firebase!", app);
+const database = firebase.database();
 
-// 예시: API 키가 저장되어 있지 않으면 저장
-getApiKey(function (apiKey) {
-    if (!apiKey) {
-        const newApiKey = 'YOUR_API_KEYAIzaSyD8IuWHaEfNF34gukcV_theuMotAWoD6gE'; // 실제 API 키로 교체
-        saveApiKey(newApiKey);
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+    if (key === 'content'){
+      database.ref(namespace+'content').set({
+        content : newValue
+      });
     }
+  }
 });
+
+  } catch (e) {
+    console.error(e);
+  }

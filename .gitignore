@@ -1,0 +1,6 @@
+model.json
+node_modules
+model.safetensors
+service_account.json
+package.json
+package-lock.json
