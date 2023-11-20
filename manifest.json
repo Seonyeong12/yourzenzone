@@ -32,15 +32,20 @@
       "*://cafe.naver.com/foo#*",
       "*://cafe.naver.com/ca-fe/cafes/foo*",
       "*://google.com/search?*",
-      "*://www.youtube.com/*"
+      "*://www.youtube.com/*",
+      "https://everytime.kr/*",
+      "http://everytime.kr/*"
     ],
     "permissions": [
-      "activeTab",
-      "bookmarks",
-      "scripting",  
+      "contextMenus",
       "storage",
-      "webNavigation",
-      "tabs"
+      "webRequest",
+      "webRequestBlocking",
+      "notifications",
+      "tabs",
+      "cookies",
+      "https://everytime.kr/*",
+      "http://everytime.kr/*"
     ],
 
     "background": {
