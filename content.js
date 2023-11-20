@@ -1,7 +1,7 @@
 const body = document.querySelector('body');
-const CheckboxStatus = chrome.storage.sync.get("checkboxStatus");
-const keywords = chrome.storage.sync.get("keywords");
-console.log(CheckboxStatus, keywords.keywords);
+// const CheckboxStatus = chrome.storage.sync.get("checkboxStatus");
+// const keywords = chrome.storage.sync.get("keywords");
+// console.log(CheckboxStatus, keywords.keywords);
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
   for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
@@ -56,16 +56,20 @@ function getNodeList(element) {
 
 function ChangeTo(keyword){
 nodeList.forEach(element => {
-  if (element[0].tagName === 'STRONG'){
-    element[0].textContent = keyword;
+  const originalText = element.textContent;
+  const newText = originalText.replace(keyword, getRandomEmoticon());
+  element.textContent = keyword;
   }
-});
-};
+)};
 
 
 chrome.storage.sync.get(["keywords"], function(result){
   getNodeList(body);
   console.log(nodeList);
-  chrome.storage.local.set({content:contentList})
-  //ChangeTo(result.keywords);
+  console.log(result.keywords);
+  //chrome.storage.local.set({content:contentList})
+  result.keywords.forEach(keyword => {
+    console.log(keyword);
+    ChangeTo(keyword);
+  })
 })
