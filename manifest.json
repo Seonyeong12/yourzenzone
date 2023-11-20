@@ -3,7 +3,9 @@
     "name": "YourZenzone",
     "version": "1.0",
     "description": "Convert the hate speech to a random emoticon on website",
-   
+    "background": {
+      "service_worker": "background.js"
+    },
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
@@ -29,7 +31,8 @@
       "*://cafe.naver.com/foo*",
       "*://cafe.naver.com/foo#*",
       "*://cafe.naver.com/ca-fe/cafes/foo*",
-      "*://google.com/search?*"
+      "*://google.com/search?*",
+      "*://www.youtube.com/*"
     ],
     "permissions": [
       "activeTab",
