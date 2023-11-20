@@ -74,3 +74,8 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     }
   }
 });
+
+
+window.addEventListener('scroll', () => {
+  processPage();
+});
