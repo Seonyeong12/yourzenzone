@@ -17,7 +17,6 @@ const TagList = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'BODY', 'FORM'];
 const pattern = /^[^ㄱ-ㅎ가-힣a-zA-Z]*$/;
 let nodeList = [];
 let contentList = [];
-
 function getNodeList(element) {
   if (element.nodeType === Node.TEXT_NODE) {
     if (!TagList.includes(element.parentElement.tagName)) {
