@@ -32,35 +32,30 @@ let nodeList = [];
 let contentList = [];
 function getNodeList(element) {
   if (element.nodeType === Node.TEXT_NODE) {
-    if (TagList.includes(element.parentElement.tagName)) {
-      ;
-    } else {
+    if (!TagList.includes(element.parentElement.tagName)) {
       var t = preprocess(element.textContent);
-      if (t.match(pattern)){
-        ;
-      }
-      else{
-        nodeList.push(element.parentElement);
-        contentList.push([t])
+      if (!t.match(pattern)) {
+        nodeList.push(element); // element를 직접 저장
+        contentList.push(t);
       }
     }
-    // If the current node is a text node, replace text content
   } else if (element.nodeType === Node.ELEMENT_NODE) {
-    // If the current node is an element, recursively process its children
     for (const child of element.childNodes) {
       getNodeList(child);
     }
   }
-  return nodeList, contentList;
 }
 
-function ChangeTo(keyword){
-nodeList.forEach(element => {
-  const originalText = element.textContent;
-  const newText = originalText.replace(keyword, getRandomEmoticon());
-  element.textContent = keyword;
-  }
-)};
+
+function ChangeTo(keyword) {
+  nodeList.forEach(element => {
+    const originalText = element.textContent;
+    const regex = new RegExp(keyword, "gi"); // 키워드를 정규 표현식으로 변환
+    const newText = originalText.replace(regex, getRandomEmoticon());
+    element.textContent = newText; // 교체된 텍스트로 업데이트
+  });
+};
+
 
 
 chrome.storage.sync.get(["keywords"], function(result){
