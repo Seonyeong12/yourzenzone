@@ -1,6 +1,6 @@
 const body = document.querySelector('body');
-
-const emoticons = ["😃", "😊", "😄", "😁", "😆", "😅"];
+''
+const emoticons = ["😃", "😊", "😄", "😁", "😆", "😅","😸","🐶", "🐺", "🦊", "🐻‍❄️", "🐭", "🐋", "❤️", "🧡", '💛', '💚', '💙', "💜"];
 function getRandomEmoticon() {
   const randomIndex = Math.floor(Math.random() * emoticons.length);
   return emoticons[randomIndex];
@@ -14,16 +14,17 @@ function preprocess(txt) {
 }
 
 const TagList = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'BODY', 'FORM'];
-const pattern = /^[^ㄱ-ㅎ가-힣a-zA-Z]*$/;
+const pattern = /^[^ㄱ-ㅎ가-힣]*$/;
 let nodeList = [];
 let contentList = [];
 function getNodeList(element) {
   if (element.nodeType === Node.TEXT_NODE) {
     if (!TagList.includes(element.parentElement.tagName)) {
       var t = preprocess(element.textContent);
-      if (!t.match(pattern)) {
+      if (!t.match(pattern) && t.length > 5) {
         nodeList.push(element); // element를 직접 저장
         contentList.push(t);
+        //console.log(typeof(t));
       }
     }
   } else if (element.nodeType === Node.ELEMENT_NODE) {
@@ -45,9 +46,12 @@ function ChangeTo(keyword) {
 
 function processPage() {
   chrome.storage.sync.get(["keywords"], function(result) {
-    if (result.keywords) {
+    if (result.keywords && result.keywords.length > 0) {
       getNodeList(body);
+      console.log(contentList);
+      chrome.storage.local.set({content : contentList});
       //console.log(nodeList);
+      console.log(result.keywords)
       result.keywords.forEach(keyword => {
         ChangeTo(keyword);
       });
@@ -56,6 +60,9 @@ function processPage() {
 }
 
 processPage();
+chrome.runtime.sendMessage('savedContent', (response) => {
+  console.log('sent msg', labels);
+});
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
   for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
@@ -66,5 +73,5 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 });
 
 window.addEventListener('scroll', () => {
-  processPage();
+  //processPage();
 });
