@@ -55,8 +55,16 @@ function saveKeywords(keywords){
 keyword_btn.addEventListener('click', function(){
   //console.log(keywordInput);
   var keyword = keywordInput[0].value;
-  keywords = keyword.split(',');
-  saveKeywords(keywords);
+  if(keyword === ""){
+    chrome.storage.sync.remove('keywords');
+    window.localStorage.removeItem('keywords');
+  }
+  else{
+    keywords = keyword.split(',');
+    keywords = keywords.filter(item => item !== '');
+    keywords = keywords.filter(item => item !== ' ');
+    saveKeywords(keywords);
+  }
 });
 
 // del_btn.addEventListener('click', function(){
